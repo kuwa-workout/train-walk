@@ -1,0 +1,19 @@
+
+/* Weekly muscle balance */
+.musclePanel{padding:15px 16px}
+.muscleHeadline{font-size:14px;font-weight:850;line-height:1.55;display:flex;align-items:flex-start;gap:8px}
+.musclePill{display:inline-block;flex:none;border-radius:999px;padding:4px 8px;font-size:11px;font-weight:900;background:#f1f5f9;color:#516274}
+.musclePill.caution{background:#fff2dc;color:#9a5b00}
+.muscleRecommendation{font-size:13px;line-height:1.55;background:#f3f8ff;color:#214b7d;border-radius:14px;padding:11px 12px;margin-top:11px}
+.muscleDetails{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.muscleDetails summary{color:#2869b4;font-size:13px;font-weight:850;cursor:pointer;padding:6px 0;min-height:34px}
+.muscleList{padding-top:8px}
+.muscleRow{display:grid;grid-template-columns:90px 1fr 68px;gap:9px;align-items:center;margin:12px 0}
+.muscleLabel{font-size:12px;font-weight:800}
+.muscleTrack{height:9px;border-radius:99px;background:#eef1f5;overflow:hidden}
+.muscleFill{height:100%;border-radius:99px;background:#3d83ed;min-width:0}
+.muscleFill.high{background:#e3a042}.muscleFill.low{background:#9babbd}
+.muscleValue{text-align:right;font-size:12px;font-weight:900;white-space:nowrap}
+.muscleStatus{color:var(--muted);font-weight:650;font-size:10px;display:block}
+.muscleNote{font-size:11px;line-height:1.65;color:var(--muted);margin:11px 0 2px}
+@media(max-width:360px){.muscleRow{grid-template-columns:72px 1fr 59px;gap:6px}.muscleLabel,.muscleValue{font-size:11px}}
