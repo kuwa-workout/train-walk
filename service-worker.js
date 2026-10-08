@@ -1,7 +1,9 @@
-const CACHE_NAME = "train-walk-v10-pwa-1";
+const CACHE_NAME = "train-walk-v11-pwa-1";
 const APP_SHELL = [
   "./",
   "./index.html",
+  "./muscle-balance.js",
+  "./muscle-balance.css",
   "./manifest.webmanifest",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
