@@ -139,10 +139,11 @@ h1{font-size:27px;line-height:1.1;margin:5px 0 0;letter-spacing:-.02em}
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="description" content="宅トレとウォーキングをシンプルに記録する個人用PWA">
 
+<link rel="stylesheet" href="./muscle-balance.css">
 </head>
 <body>
 <div class="app">
-<header class="header"><div class="eyebrow">TRAIN & WALK</div><h1 id="pageTitle">今日のコンディション</h1></header>
+<header class="header"><div class="eyebrow">TRAIN & WALK · V11</div><h1 id="pageTitle">今日のコンディション</h1></header>
 
 <main id="home" class="screen active">
   <section class="hero">
@@ -167,6 +168,17 @@ h1{font-size:27px;line-height:1.1;margin:5px 0 0;letter-spacing:-.02em}
     <div class="stat"><div class="k">宅トレ</div><div class="v" id="sumWorkout">0回</div></div>
     <div class="stat"><div class="k">歩行時間</div><div class="v" id="sumMinutes">0分</div></div>
     <div class="stat"><div class="k">距離</div><div class="v" id="sumKm">0km</div></div>
+  </section>
+
+  <div class="sectionTitle"><span>今週の筋肉バランス</span><span class="mini">実績から自動分析</span></div>
+  <section class="card musclePanel" aria-label="今週の部位別負荷分析">
+    <div id="muscleHeadline" class="muscleHeadline" aria-live="polite">実績を分析中…</div>
+    <div id="muscleRecommendation" class="muscleRecommendation">次回の候補を計算中…</div>
+    <details class="muscleDetails" id="muscleDetails">
+      <summary>部位別セット数と判定を確認</summary>
+      <div id="muscleRows" class="muscleList"></div>
+      <p id="muscleNote" class="muscleNote">主働筋=1、補助筋=0.5セットとして推定。医学的な診断ではありません。</p>
+    </details>
   </section>
 </main>
 
@@ -306,6 +318,7 @@ h1{font-size:27px;line-height:1.1;margin:5px 0 0;letter-spacing:-.02em}
   <button class="masterSave" id="saveNewMaster">種目マスタに登録</button>
 </div></div>
 
+<script src="./muscle-balance.js"></script>
 <script>
 const STORAGE="trainwalk_v3_state";
 const seedMasters=[
@@ -334,11 +347,7 @@ function initialState(){
  const key=n=>{const x=new Date(monday);x.setDate(monday.getDate()+n);return localKey(x)}
  return {
   masters:clone(seedMasters),
-  records:{
-    [key(0)]:{workout:{items:[{name:"バックランジ",weight:14.5,reps:20,sets:3},{name:"アブローラー",weight:0,reps:10,sets:3}]}},
-    [key(1)]:{walk:{minutes:32,km:2.8,steps:4100}},
-    [key(3)]:{workout:{items:[{name:"プッシュアップ",weight:0,reps:20,sets:3},{name:"サイドレイズ",weight:10,reps:15,sets:3}]}}
-  }
+  records:{}
  };
 }
 let state;
@@ -377,6 +386,7 @@ function renderHome(){
  $("weeklyWorkout").textContent=workouts;$("sumWorkout").textContent=workouts+"回";$("sumMinutes").textContent=mins+"分";$("sumKm").textContent=(Math.round(km*10)/10)+"km";
  $("weeklySub").textContent=workouts>=3?"今週の目標達成":"あと"+(3-workouts)+"回で今週の目標達成";
  $("dots").innerHTML=[0,1,2].map(i=>`<span class="dot ${i<Math.min(workouts,3)?"on":""}"></span>`).join("");
+ renderMuscleSummary(wr);
  const names=["月","火","水","木","金","土","日"];
  $("weekStrip").innerHTML=wr.map((x,i)=>{
   const icons=(x.rec.workout?"🏋️":"")+(x.rec.walk?"🚶":"");
